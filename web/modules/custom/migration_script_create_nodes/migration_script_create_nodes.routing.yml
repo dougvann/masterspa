@@ -1,0 +1,7 @@
+testModule.content:
+  path: '/migration-create-nodes'
+  defaults:
+    _controller: 'Drupal\migration_script_create_nodes\Controller\FirstController::content'
+    _title: 'Migration creating nodes'
+  requirements:
+    _permission: 'access content'

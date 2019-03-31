@@ -1,0 +1,6 @@
+name: Migration Script Create Nodes
+description: This migration script creates 649 nodes with node-title, path-alias, metatags, menu-item
+package: Custom
+type: module
+version: 1.0
+core: 8.x

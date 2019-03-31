@@ -1,0 +1,7 @@
+How to install whole site by using Composer
+
+1. Run: composer install
+2. Copy masonry.pkgd.min.js file from /libraries/masonry/dist to /libraries/masonry
+3. Run: drush cr
+4. Run: drush updb
+5. There is an issue with paragraph bp_view, to resolve just create 2 fields: bp_view_argument and bp_view_title in paragraph_revision__bp_view table. Then run: drush entity-updates

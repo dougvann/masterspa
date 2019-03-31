@@ -1,0 +1,93 @@
+<?php
+/**
+ * @file
+ * Contains \Drupal\testModule\Controller\FirstController.
+ */
+ 
+namespace Drupal\testModule\Controller;
+ 
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\node\Entity\Node;
+use Drupal\paragraphs\Entity\Paragraph;
+ 
+class FirstController extends ControllerBase {
+	public function content() {
+		$pageData = file_get_contents('http://localhost/drupal8/scrape2.html');
+		$html = str_get_html($pageData);
+		
+		$data = array();
+		
+		$imageParts = explode("?",$html->find('.contentSection',5)->find('.contentImage',0)->src);
+		$image = $imageParts[0];
+		$title = trim($html->find('.contentSection',5)->find('.subcontentHeader',0)->innertext);
+		$description = $html->find('.contentSection',5)->find('.messageContent',0)->find('p',0)->innertext;
+		$content = '<h2 class="title">'.$title.'</h2><div class="description">'.$description.'</div>';
+		$link = $html->find('.contentSection',5)->find('.messageContent',0)->find('p',1)->find('a',0)->href;
+		
+		$filename = basename($image);
+		
+		$real_path = \Drupal::service('file_system')->realpath(file_build_uri(''));
+		$cmonth = date('Y-m');
+		$destination = $real_path.'/'.$cmonth.'/'.$filename;
+		$uri = 'public://'.$cmonth.'/'.$filename;
+		$mime = mime_content_type($destination);
+		$source = $this->getSslPage($image);
+		copy($image.'?'.$imageParts[1],$destination);
+		
+		
+		$filesize = filesize($destination);
+		$created = strtotime(date('Y-m-d H:i:s'));
+		$uuid_service = \Drupal::service('uuid');
+		$uuid = $uuid_service->generate();
+		$qr = "insert into {file_managed} values(0,'$uuid','en',1,'$filename','$uri','$mime',$filesize,1,$created,$created)";
+		db_query($qr);
+		$file = file_load(db_query('SELECT MAX(fid) FROM {file_managed}')->fetchField());
+		
+		$paragraph = Paragraph::create([
+            'type' => 'impt',
+			'field_content' => [
+                'value' => $content,
+                'format' => 'full_html',
+            ],
+			'field_link' => [
+                'value' => $link,
+                'format' => 'full_html',
+            ],
+        ]);
+		$paragraph->set('field_image',$file);
+
+        $paragraph->save();
+
+        $nodeData = [
+            'type' => 'page',
+            'status' => 1,
+            'title' => 'My new page '.uniqid(),
+            'field_test_para' => [
+                [
+                    'target_id' => $paragraph->id(),
+                    'target_revision_id' => $paragraph->getRevisionId(),
+                ],
+            ],
+        ];
+
+        $entity = Node::create($nodeData);
+        $entity->save();
+		
+		return array(
+			'#type' => 'markup',
+			'#markup' => t('Hello World'),
+		);
+	}
+	private function getSslPage($url) {
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($ch, CURLOPT_HEADER, false);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_REFERER, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		$result = curl_exec($ch);
+		curl_close($ch);
+		return $result;
+	}
+}

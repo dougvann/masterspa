@@ -1,0 +1,15 @@
+global-styling:
+  version: 8.x
+  css:
+    base:
+      css/custom_sub.css: {}
+      css/frontpage.css: {}
+  js:
+    js/script.js: {}
+    js/locator.v2.js: {}
+    dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupalSettings
+
+

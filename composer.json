@@ -1,0 +1,176 @@
+{
+    "name": "synapticblue/spas",
+    "description": "Michael Phelps Signature Swim Spas - By Master Class.",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "composer/installers": "^1.0.24",
+        "cweagans/composer-patches": "^1.0",
+        "desandro/imagesloaded": "4.3.4",
+        "desandro/masonry": "4.2.2",
+        "drupal-composer/drupal-scaffold": "^2.0.1",
+        "drupal/admin_toolbar": "^1.26",
+        "drupal/adminimal_theme": "^1.4",
+        "drupal/auto_height": "^1.1",
+        "drupal/bg_image_formatter": "^1.6",
+        "drupal/block_class": "^1.0",
+        "drupal/bootstrap": "^3.17",
+        "drupal/bootstrap_layouts": "^5.1",
+        "drupal/bootstrap_paragraphs": "^2.0@beta",
+        "drupal/captcha": "^1.0@beta",
+        "drupal/classy_paragraphs": "^1.0@beta",
+        "drupal/convert_bundles": "^1.0@alpha",
+        "drupal/core": "^8",
+        "drupal/ctools": "^3.2",
+        "drupal/devel": "^2.0",
+        "drupal/dropzonejs": "^2.0@alpha",
+        "drupal/editor_advanced_link": "^1.4",
+        "drupal/embed": "^1.0",
+        "drupal/entity_browser": "^2.1",
+        "drupal/entity_embed": "^1.0@beta",
+        "drupal/entity_reference_revisions": "^1.6",
+        "drupal/entity_usage": "^2.0@alpha",
+        "drupal/field_group": "^1.0",
+        "drupal/file_browser": "^1.1",
+        "drupal/google_tag": "^1.1",
+        "drupal/juicebox": "^2.0@beta",
+        "drupal/libraries": "^3.0@alpha",
+        "drupal/masonry": "^1.0@RC",
+        "drupal/masonry_views": "^1.0@RC",
+        "drupal/media_bulk_upload": "^1.0@alpha",
+        "drupal/media_entity_browser": "^1.0@beta",
+        "drupal/menu_item_extras": "^2.4",
+        "drupal/metatag": "^1.8",
+        "drupal/migrate_file_to_media": "^1.0@beta",
+        "drupal/migrate_plus": "^4.1",
+        "drupal/migrate_tools": "^4.1",
+        "drupal/module_filter": "^3.1",
+        "drupal/paragraphs": "^1.8",
+        "drupal/paragraphs_class": "^1.0@alpha",
+        "drupal/paragraphs_viewmode": "^1.0@alpha",
+        "drupal/pathauto": "^1.3",
+        "drupal/quick_node_clone": "^1.11",
+        "drupal/recaptcha": "^2.4",
+        "drupal/stage_file_proxy": "^1.0@alpha",
+        "drupal/token": "^1.5",
+        "drupal/twig_tweak": "^2.1",
+        "drupal/url_redirect": "^2.61",
+        "drupal/varnish": "1.x-dev",
+        "drupal/video_embed_field": "^2.0",
+        "drupal/views_bulk_edit": "^2.2",
+        "drupal/views_bulk_operations": "^2.5",
+        "drupal/viewsreference": "^1.4",
+        "enyo/dropzone": "4.3.0",
+        "monocult/jquery-autoheight": "master",
+        "wikimedia/composer-merge-plugin": "^1.4"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "preferred-install": "dist",
+        "autoloader-suffix": "Drupal8",
+        "sort-packages": true
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "extra": {
+        "installer-paths": {
+            "web/core": ["type:drupal-core"],
+            "web/modules/contrib/{$name}": ["type:drupal-module"],
+            "web/profiles/contrib/{$name}": ["type:drupal-profile"],
+            "web/themes/contrib/{$name}": ["type:drupal-theme"],
+            "web/drush/contrib/{$name}": ["type:drupal-drush"],
+            "web/libraries/{$name}": ["type:drupal-library"]
+        },
+        "drupal-scaffold": {
+          "source": "https://raw.githubusercontent.com/pantheon-systems/drops-8-scaffolding/{version}/{path}",
+          "includes": [
+              "sites/default/default.services.pantheon.preproduction.yml",
+              "sites/default/settings.pantheon.php"
+          ],
+          "excludes": [
+              ".csslintrc",
+              ".editorconfig",
+              ".eslintignore",
+              ".eslintrc.json",
+              ".htaccess",
+              "web.config"
+          ]
+      }
+    },
+    "autoload": {
+        "classmap": [
+            "scripts/composer/ScriptHandler.php"
+        ]
+    },
+    "scripts": {
+        "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "prepare-for-pantheon": "DrupalProject\\composer\\ScriptHandler::prepareForPantheon",
+        "post-install-cmd": [
+            "@drupal-scaffold",
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ],
+        "post-update-cmd": [
+            "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+        ]
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "enyo/dropzone",
+                "type": "drupal-library",
+                "version": "4.3.0",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/enyo/dropzone/archive/v4.3.0.zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "desandro/imagesloaded",
+                "type": "drupal-library",
+                "version": "4.3.4",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/desandro/imagesloaded/archive/v4.1.4.zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "desandro/masonry",
+                "type": "drupal-library",
+                "version": "4.2.2",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/desandro/masonry/archive/v4.2.2.zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "monocult/jquery-autoheight",
+                "type": "drupal-library",
+                "version": "master",
+                "source": {
+                    "type": "git",
+                    "reference":"master",
+                    "url": "https://github.com/monocult/jquery-autoheight.git"
+                },
+                "extra": {
+                    "installer-name": "autoheight"
+                }
+            }
+        }
+    ]
+}

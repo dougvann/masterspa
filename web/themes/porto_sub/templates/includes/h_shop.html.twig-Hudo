@@ -1,0 +1,66 @@
+
+{% if header_sticky_option == 'always_sticky' or arg == 'index-header-always-sticky' %}
+<header id="header" data-plugin-options='{"stickyEnabled": true, "stickyEnableOnBoxed": true, "stickyEnableOnMobile": true, "stickyStartAt": 0, "stickySetTop": "0", "stickyChangeLogo": false}'>
+{% else %}
+<header id="header" data-plugin-options='{"stickyEnabled": true, "stickyEnableOnBoxed": true, "stickyEnableOnMobile": true, "stickyStartAt": 57, "stickySetTop": "-57px", "stickyChangeLogo": true}'>
+{% endif %}
+    <div class="header-body">
+        <div class="header-container container">
+            <div class="header-row">
+                {% if logopath %}
+                    <div class="header-column">
+                        <div class="sitetop">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="logocustom swim-spas col-xs-7 col-sm-5 col-md-6 hidden-xs"><a href="/"><img src="/themes/porto_sub/swimspa-logo.png"></a></div>
+                                <div class="logocustom swim-spas swim-spas-stacked col-xs-7 col-sm-5 col-md-6 hidden-sm hidden-md hidden-lg"><a href="/"><img src="/themes/porto_sub/img/full-mpswim-logo-stacked.png"></a></div>
+                                <div class="logocustom master-spas d-sm-none col-sm-7 col-md-6 hidden-xs"><a href="https://www.masterspas.com/"><img src="/themes/porto_sub/by-master-spas.png"></a></div>
+
+                            </div>
+
+
+                            <div class="sitetopbutton col-xs-10 col-sm-11 col-md-6">
+                                <div class="btn para request-pricing"><a href="/get-swim-spa-pricing.php">REQUEST PRICING</a></div>
+
+                                <div class="btn para where-to-buy"><a href="/find-a-dealer.php">WHERE TO BUY</a></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="header-row">
+                <div class="header-column">
+                    <div class="header-row">
+                        <div class="header-search hidden-xs">
+                            {% if page.search %}
+                                {{ page.search }}
+                            {% endif %}
+                        </div>
+                        {% if page.nav_top %}
+                        <nav class="header-nav-top">
+                            {{ page.nav_top }}
+                        </nav>
+                        {% endif %}
+                    </div>
+                    <div class="header-row">
+                        <div class="header-nav {{ navigation_option }}">
+                            <button class="btn header-btn-collapse-nav h-default" data-toggle="collapse" data-target=".header-nav-main">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            {% if page.header_social %}
+                            <div class="header-social-icons social-icons hidden-xs">
+                                {{ page.header_social }}
+                            </div>
+                            {% endif %}
+                            <div class="header-nav-main header-nav-main-effect-1 header-nav-main-sub-effect-1 collapse">
+                                {% if page.primary_menu %}
+                                    {{ page.primary_menu }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
